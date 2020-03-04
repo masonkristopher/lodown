@@ -22,7 +22,7 @@ function each(collection, action) {
     }
 }
 module.exports.each = each;
-
+ 
 
 /**
  * identity: Return unmodified input value. 
@@ -206,35 +206,6 @@ module.exports.contains = contains;
 
 
 /**
- * each: Calls a given function once for each element in the given parameters. 
- * Will run the function on each item in an array, it's index, an on the array 
- * as a whole. For objects, it will run the function on the property's value, 
- * it's key, and the object as a whole.
- * 
- * @param {Object or Array} collection: the collection that will have the 
- * function called on itself and it's contents.
- * 
- * @param {Function} test: the function that will be invoked on the collection 
- * and each element in the collection.
- * 
- */
- 
-function each(collection, test) {
-    
-    if (typeOf(collection) === "array") {
-        for (let i = 0; i < collection.length; i++) {
-            test(collection[i], i, collection);
-        }
-    } else {
-        for (var key in collection) {
-            test(collection[key], key, collection);
-        }
-    }
-}
-module.exports.each = each;
-
-
-/**
  * unique: Returns a new array of all the elements in a given array with 
  * duplicates removed.
  * 
@@ -384,7 +355,7 @@ module.exports.map = map;
  
 function pluck(array, property) {
     return map(array, function(element, index, array) {
-      return element.name;  
+      return element[property];  
     })
 }
 module.exports.pluck = pluck; 
@@ -394,7 +365,10 @@ module.exports.pluck = pluck;
  * every: Returns a boolean value based on the result of running a given function
  * over a given collection and it's elements. A false result means at least one
  * of the tests returned a falsey result. A true result means that no test
- * was falsey, or all the tests were truthy.
+ * was falsey, or all the tests were truthy. If no function is given, will look
+ * for truthy or falsey values in each element in the collection, returning a
+ * true if all the values in the collection are truthy, and a false if one or 
+ * more values are falsey.
  * 
  * @param {Object or Array} collection: Any object or array upon which a 
  * function will be called and the results evaluated.
@@ -438,7 +412,10 @@ module.exports.every = every;
  * some: Returns a boolean value based on the result of running a given function
  * over a given collection and it's elements. A true result means at least one
  * of the tests returned a truthy result. A false result means that no test
- * was truthy, or all the tests were falsey.
+ * was truthy, or all the tests were falsey. If no function is given, will look
+ * for truthy or falsey values in each element in the collection, returning a
+ * true if any of the values are truthy, and a false only if none of the values 
+ * are truthy, or all the values are falsey.
  * 
  * @param {Object or Array} collection: Any object or array upon which a 
  * function will be called and the results evaluated.
